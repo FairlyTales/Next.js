@@ -1,2 +1,1 @@
-# Next.js_Course
-Learning Next.js
+# Learning Next.js

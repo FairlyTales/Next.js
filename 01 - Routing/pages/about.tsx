@@ -3,7 +3,7 @@ import React from 'react';
 const About = (props): JSX.Element => {
   return (
     <div>
-      <h1>About</h1>
+      <h1>About page</h1>
     </div>
   );
 };

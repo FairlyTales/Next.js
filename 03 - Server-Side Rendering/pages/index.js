@@ -1,9 +1,16 @@
-function HomePage(props) {
+import React from "react";
+
+function HomePage() {
+	const a = [
+		1,
+		2,
+		3,
+	]
   return (
     <ul>
-      <li>Product 1</li>
-      <li>Product 2</li>
-      <li>Product 3</li>
+      <li>{a[0]}</li>
+      <li>{a[1]}</li>
+      <li>{a[2]}</li>
     </ul>
   );
 }

@@ -1,5 +1,17 @@
-const handler = (req, res) => {
-  const id = req.query.eventId;
+import { MongoClient } from "mongodb";
+import { MongoUrl } from "../../../helpers/constants";
+
+const handler = async (req, res) => {
+  const eventId = req.query.eventId;
+  let client, collection;
+
+  try {
+    client = await MongoClient.connect(MongoUrl);
+    collection = client.db().collection("comments");
+  } catch (err) {
+    res.status(500).json({ message: "DB connection error" });
+    return;
+  }
 
   if (req.method === "POST") {
     const { email, name, text } = req.body;
@@ -11,25 +23,36 @@ const handler = (req, res) => {
     }
 
     const comment = {
-      id: new Date().toISOString(),
-      email,
+      eventId,
       name,
+      email,
       text,
     };
 
-    res.status(201).json({ message: "Comment added", comment });
+    try {
+      const dbRes = await collection.insertOne(comment);
+      comment.id = dbRes.insertedId;
+
+      res.status(201).json({ message: "Comment added", comment });
+			await client.close();
+    } catch (err) {
+      res
+        .status(500)
+        .json({ message: "Internal server error, comment not added" });
+    }
   }
 
   if (req.method === "GET") {
-    const comments = [
-      {
-        id: "1",
-        name: "lol",
-        text: "kek",
-        email: "cheburek@email.com",
-      },
-    ];
-    res.status(200).json({ comments });
+    try {
+      const comments = await collection.find().sort({ _id: -1 }).toArray();
+
+      res.status(200).json({ comments });
+			await client.close();
+    } catch (err) {
+      res
+        .status(500)
+        .json({ message: "Internal server error, comment not added" });
+    }
   }
 };
 

@@ -1,13 +1,20 @@
 import classes from "./newsletter-registration.module.css";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
+import NotificationContext from "../../store/notification-context";
 
 const NewsletterRegistration = () => {
   const emailRef = useRef();
+  const notificationCtx = useContext(NotificationContext);
 
-  function registrationHandler(e) {
+  const registrationHandler = async (e) => {
     e.preventDefault();
-
     const email = emailRef.current.value;
+
+    notificationCtx.showNotification({
+      title: "Signing up...",
+      message: "Registering",
+      status: "pending",
+    });
 
     fetch("/api/newsletter", {
       method: "POST",
@@ -16,9 +23,27 @@ const NewsletterRegistration = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-  }
+      // pretty bad code example, one of the worst in this course
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(res.message);
+        }
+      })
+      .then(
+        notificationCtx.showNotification({
+          title: "Signed up",
+          message: "Registered successfully",
+          status: "success",
+        })
+      )
+      .catch((err) => {
+        notificationCtx.showNotification({
+          title: "Error",
+          message: err.message || "Something went wrong",
+          status: "error",
+        });
+      });
+  };
 
   return (
     <section className={classes.newsletter}>

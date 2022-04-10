@@ -50,7 +50,7 @@ function NewComment({ onAddComment }) {
       </div>
       <div className={classes.control}>
         <label htmlFor="comment">Your comment</label>
-        <textarea id="comment" rows="5" ref={commentInputRef}></textarea>
+        <textarea id="comment" rows="5" ref={commentInputRef}/>
       </div>
       {isInvalid && <p>Please enter a valid email address and comment!</p>}
       <button>Submit</button>

@@ -1,5 +1,6 @@
 import { MongoClient } from "mongodb";
 
+// at the time you read this code these credentials no longer work
 const MongoUrl =
   `mongodb+srv://${process.env.db_user}:${process.env.db_password}@${process.env.db_cluster}.cfjsv.mongodb.net/${process.env.db_database}?retryWrites=true&w=majority`;
 

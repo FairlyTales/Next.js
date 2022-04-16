@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 
 const MongoUrl =
-  "mongodb+srv://admin:admin@cluster0.cfjsv.mongodb.net/emails?retryWrites=true&w=majority";
+  `mongodb+srv://${process.env.db_user}:${process.env.db_password}@${process.env.db_cluster}.cfjsv.mongodb.net/${process.env.db_database}?retryWrites=true&w=majority`;
 
 const handler = async (req, res) => {
   if (req.method === "POST") {

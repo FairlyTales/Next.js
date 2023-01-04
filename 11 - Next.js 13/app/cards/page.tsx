@@ -2,6 +2,7 @@ import React from 'react';
 import PocketBase from 'pocketbase'
 import Card from './card';
 import styles from './Cards.module.css';
+import CreateCard from "./createCard";
 
 export const dynamic = 'auto',
   dynamicParams = true,
@@ -25,6 +26,8 @@ const Page = async () => {
       <div className={styles.grid}>
         {cards?.map((card) => <Card key={card.id} card={card}/>)}
       </div>
+
+      <CreateCard />
     </div>
   );
 }

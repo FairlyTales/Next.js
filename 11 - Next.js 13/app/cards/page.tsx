@@ -1,13 +1,11 @@
 import React from 'react';
+import PocketBase from 'pocketbase'
 import Card from './card';
 import styles from './Cards.module.css';
 
 async function getCards() {
-  const res = await fetch(
-    'http://127.0.0.1:8090/api/collections/cards/records?page=1&perPage=30',
-    {cache: 'no-store'}
-  );
-  const data = await res.json();
+  const pb = new PocketBase('http://127.0.0.1:8090');
+  const data = await pb.collection('cards').getList(1, 50);
 
   return data?.items as any[];
 }

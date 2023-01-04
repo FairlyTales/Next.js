@@ -7,7 +7,7 @@ const Card = ({ card }: any) => {
 
   return (
     <Link href={`/cards/${id}`}>
-      <div className={styles.note}>
+      <div className={styles.card}>
         <h2>{title}</h2>
         <h5>{content}</h5>
         <p>{created}</p>

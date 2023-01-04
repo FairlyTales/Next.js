@@ -16,7 +16,7 @@ export default function RootLayout({
         Home
       </Link>
       <Link href="/cards">
-        Notes
+        Cards
       </Link>
     </nav>
     {children}
